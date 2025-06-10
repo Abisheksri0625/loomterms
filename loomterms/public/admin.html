@@ -1,46 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Panel - Loom SDK</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Loom SDK Loader -->
+    <script>
+    window.LoomSDKLoaded = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = "https://cdn.loom.com/sdk/loom-sdk.latest.min.js";
+        script.onload = () => window.LoomSDK ? resolve(window.LoomSDK) : reject(new Error('Loom SDK not available'));
+        script.onerror = () => reject(new Error('Failed to load Loom SDK'));
+        document.head.appendChild(script);
+    });
+    </script>
+    
+    <script src="../src/admin.js" defer></script>
 </head>
 <body>
-  <h1>Welcome Admin</h1>
-  <button id="start-recording">Start Recording Terms & Conditions</button>
-
-  <!-- LOOM SDK Script -->
-  <script src="https://cdn.loom.com/s/recording.js"></script>
-  
-  <script>
-    let loomSDKLoaded = false;
-
-    // Wait for Loom SDK to load
-    window.addEventListener("load", () => {
-      if (typeof window.LoomSDK !== "undefined") {
-        loomSDKLoaded = true;
-        console.log("✅ Loom SDK Loaded");
-      } else {
-        console.error("❌ Loom SDK Failed to Load");
-      }
-    });
-
-    // Button click triggers Loom recording
-    document.addEventListener("DOMContentLoaded", function () {
-      const recordBtn = document.getElementById("start-recording");
-
-      recordBtn.addEventListener("click", () => {
-        if (!loomSDKLoaded) {
-          alert("Loom SDK not loaded yet. Try again.");
-          return;
-        }
-
-        // Open Loom recorder modal
-        window.LoomSDK.openModal().catch((error) => {
-          console.error("Loom modal failed:", error);
-        });
-      });
-    });
-  </script>
+    <div class="admin-container">
+        <h1>Admin Dashboard</h1>
+        <div class="loom-recording-box">
+            <h2>Loom Recording</h2>
+            <button id="startRecording" class="record-btn">Start Recording</button>
+            <button id="stopRecording" class="record-btn stop" disabled>Stop Recording</button>
+            <div id="videoContainer"></div>
+        </div>
+        <button onclick="window.location.href='index.html'" class="logout-btn">Logout</button>
+    </div>
 </body>
 </html>
