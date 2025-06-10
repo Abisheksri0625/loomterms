@@ -5,7 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.loom.com/sdk/loom-sdk.latest.min.js"></script>
+    
+    <!-- Loom SDK Loader -->
+    <script>
+    window.LoomSDKLoaded = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = "https://cdn.loom.com/sdk/loom-sdk.latest.min.js";
+        script.onload = () => window.LoomSDK ? resolve(window.LoomSDK) : reject(new Error('Loom SDK not available'));
+        script.onerror = () => reject(new Error('Failed to load Loom SDK'));
+        document.head.appendChild(script);
+    });
+    </script>
+    
     <script src="../src/admin.js" defer></script>
 </head>
 <body>
